@@ -6377,6 +6377,12 @@ std::vector<std::vector<Ref<FinderPattern> > > MultiFinderPatternFinder::selectB
  * limitations under the License.
  */
 
+/*
+ *
+ * Code128Reader have one new function - it will add the break line char
+ *
+ */
+
 // #include "Code128Reader.h"
 // #include <zxing/oned/OneDResultPoint.h>
 // #include <zxing/common/Array.h>
@@ -6750,7 +6756,12 @@ namespace zxing {
                 }
                 switch (code) {
                   case CODE_FNC_1:
-                    // do nothing?
+                  case CODE_FNC_2:
+                  case CODE_FNC_3:
+                    // Add break character
+                    if (tmpResultString.length() > 0) {
+                        tmpResultString.append(1, (char) 29);
+                    }
                     break;
                   case CODE_CODE_A:
                     codeSet = CODE_CODE_A;
@@ -11979,4 +11990,3 @@ Point QREdgeDetector::endOfReverseBlackWhiteBlackRun(const BitMatrix& image, Poi
 
 } // namespace qrcode
 } // namespace zxing
-
